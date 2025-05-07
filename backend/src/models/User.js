@@ -45,4 +45,12 @@ const userSchema = new mongoose.Schema({
         ref : "User",
     }
   ]
-},{timestamps:true});
+},{timestamps:true}
+);
+
+
+const User = mongoose.model("User",userSchema);
+
+userSchema.pre("save",)
+
+export default User;
