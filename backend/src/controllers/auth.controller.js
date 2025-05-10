@@ -7,9 +7,9 @@ export async function signup(req,res){
 
 
     try {
-        if(!email || !password || !fullName){
-            return res.status(400).json({message: "All fields are required "});
-        }
+      if (!email || !password || !fullName) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
 
         if(password.length < 6){
             return res.status(400).json({message : "Password must be at least 6 character"});
@@ -29,13 +29,14 @@ export async function signup(req,res){
           const idx = Math.floor(Math.random() * 100) + 1; // generate a num between 1-100
           const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`
           
-          const newUser = new User.create({
+          const newUser = await User.create({
             email,
             fullName,
             password,
             profilePic: randomAvatar,
           })
 
+          // Create a user in steam as well 
           const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET_KEY,{
             expiresIn: "7d"
           })
@@ -49,7 +50,8 @@ export async function signup(req,res){
 
           res.status(201).json({ success: true, user: newUser });
         } catch (error) {
-          
+          console.log("Error in signup controller", error);
+          res.status(500).json({message: "Internal Server Error"});
         }
       }
 
