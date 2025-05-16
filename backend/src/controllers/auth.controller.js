@@ -34,7 +34,7 @@ export async function signup(req,res){
             fullName,
             password,
             profilePic: randomAvatar,
-          })
+          });
 
           // Create a user in steam as well 
           const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET_KEY,{
@@ -69,8 +69,23 @@ export async function login(req,res){
       const isPasswordCorrect = await user.matchPassword(password);
       if(!isPasswordCorrect) return res.status(401).json({message : "Invalid email or password"});
 
+          const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET_KEY,{
+            expiresIn: "7d"
+          })
+
+          res.cookie("jwt", token, {
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            httpOnly: true, // prevent XSS attacks,
+            sameSite: "strict", // prevent CSRF attacks
+            secure: process.env.NODE_ENV === "production",
+          });
+
+          res.status(200).json({success: true ,user});
+
     } catch (error) {
-      
+      console.log("Eroor in login controller",error.message);
+      res.status(500).json({message : "Internal Server Error"});
+
     }
 }
 
