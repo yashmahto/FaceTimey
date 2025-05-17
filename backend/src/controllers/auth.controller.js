@@ -37,15 +37,15 @@ export async function signup(req,res){
             profilePic: randomAvatar,
           });
 
-          try {
-            await upsertStreamUser ({
-            id : newUser._id.toString(),
-            name: newUser.fullName,
-            image: newUser.profilePic || "",
+         try {
+            await upsertStreamUser({
+          id: newUser._id.toString(),
+          name: newUser.fullName,
+          image: newUser.profilePic || "",
           });
-          console.log(`Stram user created for ${newUser.fullName}`);
+          console.log(`Stream user created for ${newUser.fullName}`);
           } catch (error) {
-            console.log("Error creating Stream user:" , error);
+            console.log("Error creating Stream user:", error);
           }
 
           
