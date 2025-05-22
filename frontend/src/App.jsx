@@ -11,23 +11,23 @@ import OnboardingPage from "./pages/OnboardigPage.jsx"
 import  {Toaster} from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query"
 
+import { axiosInstance } from "./lib/axios.js"
+
 const App = () => {
   
-// tanstack   query
-// delete => post put delete
-
 const {data , isLoading , error} = useQuery({
   queryKey:["todos"],
 
 
   queryFn : async() => {
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos");
-    const data = await res.json();
-    return data;
+
+    const res = await axiosInstance.get("http://localhost:5001/api/auth/me");
+    return res.data;
   },
 });
 
 console.log(data);
+
 
   
   return (
