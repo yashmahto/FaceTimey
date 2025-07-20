@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo
 
-[👉 Click here to try FaceTimey](https://facetimey.onrender.com)  
+(https://facetimey.onrender.com)  
 
 
 ---
@@ -64,5 +64,4 @@
 
 ---
 
-## 📁 Project Structure
 
